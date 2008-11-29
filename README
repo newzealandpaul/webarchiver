@@ -1,0 +1,3 @@
+Webarchiver allows you to create Safari .webarchive files from the command line. Webarchives are a convenient way to store a webpage and its associated files (images, css, javascript, etc) in a single file. It is very simple to use:
+
+./webarchiver -url http://www.google.com -output google.webarchive
