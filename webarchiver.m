@@ -1,4 +1,4 @@
-//If you use this code, please link to my blog: http://entropy.textdriven.com, thanks.
+//If you use this code, please link to my blog: http://www.entropytheblog.com/blog/ . thanks.
 
 #import <Foundation/Foundation.h>
 #import <Webkit/Webkit.h>
