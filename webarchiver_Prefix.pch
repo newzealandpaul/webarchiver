@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'webarchiver' target in the 'webarchiver' project.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
