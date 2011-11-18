@@ -26,6 +26,8 @@ The easiest way to install webarchiver is using
 
 ##Release notes
 
+Version 0.4 : Code maintenance and cleanup ([Jan Weiß][]).
+
 Version 0.3 : Changed URL and sorted out source for git.
 
 Version 0.2 : [John Winter][] fixed page loading issue.
@@ -42,6 +44,7 @@ Version 0.1 : Initial release.
 -   Boey Maun Suang for creating a MacPort
 
   [MacPorts]: http://www.macports.org/
+  [Jan Weiß]: https://github.com/JanX2/webarchiver
   [John Winter]: http://www.shipsomecode.com/
   [Keith Blount]: http://www.literatureandlatte.com/
   [Rob Griffiths]: http://www.macosxhints.com/
