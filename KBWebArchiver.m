@@ -7,27 +7,7 @@
 
 #import "KBWebArchiver.h"
 
-// Category on NSURL to check whether an HTTP URL is valid - thanks to whoever posted it on CocoaDev
-// (http://www.cocoadev.com/index.pl?FileExistsAtURL)
-@interface NSURL (ValidityChecking)
-@end
-
-@implementation NSURL (ValidityChecking)
-- (BOOL)httpIsValid
-{
-	BOOL isValid = NO;
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self];
-	[request setHTTPMethod:@"HEAD"];
-	NSHTTPURLResponse *response = nil;
-	[NSURLConnection sendSynchronousRequest:request
-						  returningResponse:&response
-									  error:NULL];
-	if ((response != nil) && ([response statusCode] == 200))
-	isValid = YES;
-
-	return isValid;
-}
-@end
+#import "NSURL+ValidityChecking.h"
 
 
 @interface KBWebArchiver (Private)
@@ -50,12 +30,14 @@
 
 - (WebArchive *)archiveFromString:(NSString *)URLString isPath:(BOOL)isPath textString:(NSString **)textString
 {
+	WebView *webView = [[WebView alloc] initWithFrame:NSMakeRect(0,0,200,200)];
+	
 	NSURL *url = (isPath) ? [NSURL fileURLWithPath:URLString] : [NSURL URLWithString:URLString];
+	//NSLog (@"isPath: %i, isValid: %i", isPath, [url httpIsValid]);
 	
 	if ( (!isPath) && (![url httpIsValid]) )
 		return nil;
 	
-	WebView *webView = [[[WebView alloc] initWithFrame:NSMakeRect(0,0,200,200)] autorelease];
 	[webView setFrameLoadDelegate:self];
 
 	finishedLoading = NO;
@@ -76,8 +58,11 @@
 	[[webView mainFrame] stopLoading];	// Ensure the frame stops loading, otherwise will crash when released!
 	
 	if (loadFailed)
+	{
+		[webView release];
 		return nil;
-		
+	}
+	
 	// Get the text
 	if ([[[[webView mainFrame] frameView] documentView] conformsToProtocol:@protocol(WebDocumentText)])
 		*textString = [(id <WebDocumentText>)[[[webView mainFrame] frameView] documentView] string];
@@ -88,7 +73,7 @@
 	// using the -DOMDocument method seems to work much better.
 	
 	//return [[[webView mainFrame] dataSource] webArchive];
-	return [[[webView mainFrame] DOMDocument] webArchive];
+	return [[[[webView autorelease] mainFrame] DOMDocument] webArchive];
 }
 
 // Oh dear, this can cause some crashes - eg. importing Yahoo...

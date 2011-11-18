@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D94A3FC14769ED000DDA4AA /* NSURL+ValidityChecking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D94A3FB14769ED000DDA4AA /* NSURL+ValidityChecking.m */; };
 		8DD76F9A0486AA7600D96B5E /* webarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* webarchiver.m */; settings = {ATTRIBUTES = (); }; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		8DD76F9F0486AA7600D96B5E /* webarchiver.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* webarchiver.1 */; };
@@ -34,6 +35,8 @@
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* webarchiver_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webarchiver_Prefix.pch; sourceTree = "<group>"; };
 		3D94A3E81476954F00DDA4AA /* Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		3D94A3FA14769ED000DDA4AA /* NSURL+ValidityChecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ValidityChecking.h"; sourceTree = "<group>"; };
+		3D94A3FB14769ED000DDA4AA /* NSURL+ValidityChecking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ValidityChecking.m"; sourceTree = "<group>"; };
 		8DD76FA10486AA7600D96B5E /* webarchiver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = webarchiver; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859EA3029092ED04C91782 /* webarchiver.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = webarchiver.1; sourceTree = "<group>"; };
 		CAA258780B918EC800697B39 /* KBWebArchiver.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = KBWebArchiver.m; sourceTree = "<group>"; };
@@ -69,8 +72,10 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				CAA258780B918EC800697B39 /* KBWebArchiver.m */,
+				3D94A3FA14769ED000DDA4AA /* NSURL+ValidityChecking.h */,
+				3D94A3FB14769ED000DDA4AA /* NSURL+ValidityChecking.m */,
 				CAE08E570B8DE5EB008057C9 /* KBWebArchiver.h */,
+				CAA258780B918EC800697B39 /* KBWebArchiver.m */,
 				32A70AAB03705E1F00C91783 /* webarchiver_Prefix.pch */,
 				08FB7796FE84155DC02AAC07 /* webarchiver.m */,
 			);
@@ -162,6 +167,7 @@
 			files = (
 				8DD76F9A0486AA7600D96B5E /* webarchiver.m in Sources */,
 				CAA258790B918EC800697B39 /* KBWebArchiver.m in Sources */,
+				3D94A3FC14769ED000DDA4AA /* NSURL+ValidityChecking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
