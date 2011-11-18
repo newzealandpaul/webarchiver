@@ -35,21 +35,29 @@ int main (int argc, const char * argv[]) {
 	}
 
 	
-	KBWebArchiver *webArchiver = [[KBWebArchiver alloc] init];
 	NSString *textString;
-	WebArchive *wa = [webArchiver archiveFromString:url isPath:ispath textString:&textString];
+	WebArchive *wa;
+	if (ispath) {
+		wa = [KBWebArchiver webArchiveFromURLPathString:url textString:&textString];
+	}
+	else {
+		wa = [KBWebArchiver webArchiveFromURLString:url textString:&textString];
+	}
 	NSData *data = [wa data];
 	
 	if ( wa == nil || data == nil ) {
 		fprintf(stderr,"Error: Unable to create webarchive\n");
-		exit(1);
+		[pool drain];
+		return EXIT_FAILURE;
 	}
 	
 	BOOL success = [data writeToFile:output atomically:NO];
 	if (success == NO) {
 		fprintf(stderr,"Error: Unable to write webarchive to file %s\n",[output UTF8String]);
-		exit(1);
+		[pool drain];
+		return EXIT_FAILURE;
 	}
 	
-	exit(0);
+	[pool drain];
+	return EXIT_SUCCESS;
 }
