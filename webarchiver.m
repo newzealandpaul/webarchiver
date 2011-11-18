@@ -16,22 +16,19 @@ int main (int argc, const char * argv[]) {
 	BOOL isPath;
 	
 	if (url == nil || output == nil){
-		fprintf(stderr,"webarchiver 0.3\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at http://www.entropytheblog.com/\n");
+		fprintf(stderr, "webarchiver 0.3\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at http://www.entropytheblog.com/\n");
 		exit(1);
 	}
 	
-	NSRange http_range = NSMakeRange(0, [@"http://" length]);	
-	NSString *http_protocol = [url substringWithRange:http_range];
-	
-	if ([http_protocol isEqualToString:@"http://"]) {
+	if ([url hasPrefix:@"http://"]) {
 		isPath = NO;
 	} else {
 		isPath = YES;
 	}
 	
 	NSString *ext = @".webarchive";
-	if ([output length]<[ext length] || ![[output substringFromIndex:[output length]-[ext length]] isEqualToString:ext] ) {
-		fprintf(stderr,"Warning: Output file does not have the .webarchive file extension\n");
+	if (![output hasSuffix:ext]) {
+		fprintf(stderr, "Warning: Output file does not have the .webarchive file extension\n");
 	}
 
 	
@@ -46,14 +43,14 @@ int main (int argc, const char * argv[]) {
 	NSData *data = [wa data];
 	
 	if ( wa == nil || data == nil ) {
-		fprintf(stderr,"Error: Unable to create webarchive\n");
+		fprintf(stderr, "Error: Unable to create webarchive\n");
 		[pool drain];
 		return EXIT_FAILURE;
 	}
 	
 	BOOL success = [data writeToFile:output atomically:NO];
 	if (success == NO) {
-		fprintf(stderr,"Error: Unable to write webarchive to file %s\n",[output UTF8String]);
+		fprintf(stderr, "Error: Unable to write webarchive to file %s\n", [output UTF8String]);
 		[pool drain];
 		return EXIT_FAILURE;
 	}
