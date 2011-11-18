@@ -13,7 +13,7 @@ int main (int argc, const char * argv[]) {
 	NSString *url = [args stringForKey:@"url"];
 	NSString *output = [args stringForKey:@"output"];
 	
-	BOOL ispath;
+	BOOL isPath;
 	
 	if (url == nil || output == nil){
 		fprintf(stderr,"webarchiver 0.3\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at http://www.entropytheblog.com/\n");
@@ -21,12 +21,12 @@ int main (int argc, const char * argv[]) {
 	}
 	
 	NSRange http_range = NSMakeRange(0, [@"http://" length]);	
-	NSString *http_protocal = [url substringWithRange:http_range];
+	NSString *http_protocol = [url substringWithRange:http_range];
 	
-	if ([http_protocal isEqualToString:@"http://"]) {
-		ispath = NO;
+	if ([http_protocol isEqualToString:@"http://"]) {
+		isPath = NO;
 	} else {
-		ispath = YES;
+		isPath = YES;
 	}
 	
 	NSString *ext = @".webarchive";
@@ -37,7 +37,7 @@ int main (int argc, const char * argv[]) {
 	
 	NSString *textString;
 	WebArchive *wa;
-	if (ispath) {
+	if (isPath) {
 		wa = [KBWebArchiver webArchiveFromURLPathString:url textString:&textString];
 	}
 	else {
