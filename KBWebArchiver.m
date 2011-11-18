@@ -66,17 +66,20 @@
 		return nil;
 	}
 	
+#if 0
 	// Get the text
 	if ([[[[webView mainFrame] frameView] documentView] conformsToProtocol:@protocol(WebDocumentText)])
 		*textString = [(id <WebDocumentText>)[[[webView mainFrame] frameView] documentView] string];
 	else
 		*textString = @"";	// Return a blank string
+#endif
 
 	// the -dataSource method was causing some crashes and also some web pages only half-loaded;
 	// using the -DOMDocument method seems to work much better.
+	WebArchive *webArchive = [[[webView mainFrame] DOMDocument] webArchive];
 	
-	//return [[[webView mainFrame] dataSource] webArchive];
-	return [[[[webView autorelease] mainFrame] DOMDocument] webArchive];
+	[webView release];
+	return webArchive;
 }
 
 // Oh dear, this can cause some crashes - eg. importing Yahoo...
