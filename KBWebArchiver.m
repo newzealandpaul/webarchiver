@@ -36,7 +36,10 @@
 	//NSLog (@"isPath: %i, isValid: %i", isPath, [url httpIsValid]);
 	
 	if ( (!isPath) && (![url httpIsValid]) )
+	{
+		[webView release];
 		return nil;
+	}
 	
 	[webView setFrameLoadDelegate:self];
 
