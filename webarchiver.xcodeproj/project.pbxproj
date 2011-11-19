@@ -35,13 +35,13 @@
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* webarchiver_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webarchiver_Prefix.pch; sourceTree = "<group>"; };
 		3D94A3E81476954F00DDA4AA /* Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
-		3D94A3FA14769ED000DDA4AA /* NSURL+ValidityChecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+ValidityChecking.h"; sourceTree = "<group>"; };
-		3D94A3FB14769ED000DDA4AA /* NSURL+ValidityChecking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+ValidityChecking.m"; sourceTree = "<group>"; };
+		3D94A3FA14769ED000DDA4AA /* NSURL+ValidityChecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "NSURL+ValidityChecking.h"; sourceTree = "<group>"; };
+		3D94A3FB14769ED000DDA4AA /* NSURL+ValidityChecking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSURL+ValidityChecking.m"; sourceTree = "<group>"; };
 		8DD76FA10486AA7600D96B5E /* webarchiver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = webarchiver; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859EA3029092ED04C91782 /* webarchiver.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = webarchiver.1; sourceTree = "<group>"; };
-		CAA258780B918EC800697B39 /* KBWebArchiver.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = KBWebArchiver.m; sourceTree = "<group>"; };
+		CAA258780B918EC800697B39 /* KBWebArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KBWebArchiver.m; sourceTree = "<group>"; };
 		CAE08E250B8DE560008057C9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		CAE08E570B8DE5EB008057C9 /* KBWebArchiver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = KBWebArchiver.h; sourceTree = "<group>"; };
+		CAE08E570B8DE5EB008057C9 /* KBWebArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KBWebArchiver.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

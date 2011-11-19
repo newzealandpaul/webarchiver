@@ -32,17 +32,13 @@ int main (int argc, const char * argv[]) {
 	}
 
 	
-	NSString *textString;
-	WebArchive *wa;
-	if (isPath) {
-		wa = [KBWebArchiver webArchiveFromURLPathString:url textString:&textString];
-	}
-	else {
-		wa = [KBWebArchiver webArchiveFromURLString:url textString:&textString];
-	}
-	NSData *data = [wa data];
+	WebArchive *webarchive;
+	KBWebArchiver *archiver = [[KBWebArchiver alloc] initWithURLString:url isFilePath:isPath];
+	webarchive = [archiver webArchive];
+	NSData *data = [webarchive data];
+	[archiver release];
 	
-	if ( wa == nil || data == nil ) {
+	if ( webarchive == nil || data == nil ) {
 		fprintf(stderr, "Error: Unable to create webarchive\n");
 		[pool drain];
 		return EXIT_FAILURE;
