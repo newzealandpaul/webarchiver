@@ -26,6 +26,8 @@ The easiest way to install webarchiver is using
 
 ##Release notes
 
+Version 0.5 : More robust KBWebArchiver ([Keith Blount][] and [Jan Weiß][]).
+
 Version 0.4 : Code maintenance and cleanup ([Jan Weiß][]).
 
 Version 0.3 : Changed URL and sorted out source for git.
