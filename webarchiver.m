@@ -16,7 +16,7 @@ int main (int argc, const char * argv[]) {
 	BOOL isPath;
 	
 	if (url == nil || output == nil){
-		fprintf(stderr, "webarchiver 0.4\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at http://www.entropytheblog.com/\n");
+		fprintf(stderr, "webarchiver 0.4\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
 		exit(1);
 	}
 	
