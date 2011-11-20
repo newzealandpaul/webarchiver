@@ -38,6 +38,7 @@ Version 0.1 : Initial release.
 
 -   Most of the credit for this goes to [Keith Blount][] for his very
     useful KBWebArchiver class.
+-   Jan Weiß for his code fixes, clean up and 0.4 release. 
 -   [John Winter][] for testing and bug fixing. Thanks John.
 -   [Rob Griffiths][] for hosting a copy of the source when my blog was
     down.
