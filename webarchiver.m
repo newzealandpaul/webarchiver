@@ -20,7 +20,7 @@ int main (int argc, const char * argv[]) {
 		exit(1);
 	}
 	
-	if ([url hasPrefix:@"http://"]) {
+	if ([url hasPrefix:@"http://"] || [url hasPrefix:@"file://"]) {
 		isPath = NO;
 	} else {
 		isPath = YES;
