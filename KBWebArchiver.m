@@ -152,7 +152,7 @@
 	
 	// We also set a default title for the web page - if all goes well, this will be changed to something more
 	// meaningful in -webView:didReceiveTitle:forFrame:.
-	[archiveInformation setObject:NSLocalizedString(@"Web Page",nil) forKey:@"Title"];
+	[archiveInformation setObject:NSLocalizedString(@"Web Page", nil) forKey:@"Title"];
 	
 	// Check the URL is valid if it is to be downloaded from the 'net.
 	if ([URL isFileURL] == NO && [URL httpIsValid] == NO)
