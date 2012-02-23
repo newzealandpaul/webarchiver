@@ -132,7 +132,7 @@
 	if ([URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
 		return nil;
 	
-	return [archiveInformation objectForKey:@"Error"];
+	return [[[archiveInformation objectForKey:@"Error"] retain] autorelease];
 }
 
 - (void)getWebPage
