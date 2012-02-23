@@ -188,7 +188,7 @@
 	[[webView mainFrame] loadRequest:theRequest];
 	
 	// Wait until the site has finished loading.
-	double resolution = 1.0;
+	NSTimeInterval resolution = 1.0;
 	BOOL isRunning;
 
 	do {
