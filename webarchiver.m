@@ -36,10 +36,13 @@ int main (int argc, const char * argv[]) {
 	KBWebArchiver *archiver = [[KBWebArchiver alloc] initWithURLString:url isFilePath:isPath];
 	webarchive = [archiver webArchive];
 	NSData *data = [webarchive data];
+	NSError *error = [archiver error];
 	[archiver release];
 	
 	if ( webarchive == nil || data == nil ) {
 		fprintf(stderr, "Error: Unable to create webarchive\n");
+		if (error != nil)  fprintf(stderr, "%s\n", [[error description] UTF8String]);
+		
 		[pool drain];
 		return EXIT_FAILURE;
 	}
