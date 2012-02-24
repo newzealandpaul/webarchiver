@@ -37,6 +37,27 @@
 	return [self initWithURL:aURL];
 }
 
+- (id)initWithURLString:(NSString *)aURLString
+{
+	NSURL *aURL;	
+	
+	if (aURLString == nil)
+	{
+		aURL = nil;
+	}
+	else 
+	{
+		aURL = [NSURL URLWithString:aURLString];
+	}
+	
+	if (aURL && aURL.scheme) {
+		return [self initWithURL:aURL];
+	}
+	else {
+		return [self initWithURLString:aURLString isFilePath:YES];
+	}
+}
+
 - (id)initWithURL:(NSURL *)aURL
 {
 	self = [super init];

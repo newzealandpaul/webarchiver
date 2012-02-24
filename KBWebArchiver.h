@@ -24,6 +24,7 @@
 @property (nonatomic) BOOL localResourceLoadingOnly;
 
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath;
+- (id)initWithURLString:(NSString *)aURLString;
 - (id)initWithURL:(NSURL *)aURL;
 
 - (void)setURL:(NSURL *)aURL;

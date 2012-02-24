@@ -16,17 +16,9 @@ int main (int argc, const char * argv[]) {
 
 	BOOL localOnly = [localOnlyString isEqualToString:@"YES"];
 
-	BOOL isPath;
-	
 	if (url == nil || output == nil) {
 		fprintf(stderr, "webarchiver 0.5\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
 		exit(1);
-	}
-	
-	if ([url hasPrefix:@"http://"] || [url hasPrefix:@"file://"]) {
-		isPath = NO;
-	} else {
-		isPath = YES;
 	}
 	
 	NSString *ext = @".webarchive";
@@ -36,7 +28,7 @@ int main (int argc, const char * argv[]) {
 
 	
 	WebArchive *webarchive;
-	KBWebArchiver *archiver = [[KBWebArchiver alloc] initWithURLString:url isFilePath:isPath];
+	KBWebArchiver *archiver = [[KBWebArchiver alloc] initWithURLString:url];
 	archiver.localResourceLoadingOnly = localOnly;
 	webarchive = [archiver webArchive];
 	NSData *data = [webarchive data];
