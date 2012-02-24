@@ -21,22 +21,18 @@
 
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)flag
 {
-	self = [super init];
+	NSURL *aURL;	
 	
-	if (self)
+	if (aURLString == nil)
 	{
-		if (aURLString == nil)
-		{
-			URL = nil;
-		}
-		else
-		{
-			URL = (flag ? [[NSURL alloc] initFileURLWithPath:aURLString] : [[NSURL alloc] initWithString:aURLString]);
-		}
-		
-		archiveInformation = nil;
+		aURL = nil;
 	}
-	return self;
+	else
+	{
+		aURL = (flag ? [NSURL fileURLWithPath:aURLString] : [NSURL URLWithString:aURLString]);
+	}
+	
+	return [self initWithURL:aURL];
 }
 
 - (id)initWithURL:(NSURL *)aURL
@@ -53,14 +49,7 @@
 
 - (id)init
 {
-	self = [super init];
-	
-	if (self)
-	{
-		URL = nil;
-		archiveInformation = nil;
-	}
-	return self;
+	return [self initWithURL:nil];
 }
 
 - (void)dealloc
