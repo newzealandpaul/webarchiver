@@ -17,7 +17,11 @@
 	NSMutableDictionary *archiveInformation;
 	BOOL finishedLoading;
 	BOOL loadFailed;
+
+	BOOL localResourceLoadingOnly;
 }
+
+@property (nonatomic) BOOL localResourceLoadingOnly;
 
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath;
 - (id)initWithURL:(NSURL *)aURL;

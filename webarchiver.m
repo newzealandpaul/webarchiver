@@ -11,8 +11,11 @@ int main (int argc, const char * argv[]) {
 	NSUserDefaults *args = [NSUserDefaults standardUserDefaults];	
 	
 	NSString *url = [args stringForKey:@"url"];
+	NSString *localOnlyString = [args stringForKey:@"local"];
 	NSString *output = [args stringForKey:@"output"];
-	
+
+	BOOL localOnly = [localOnlyString isEqualToString:@"YES"];
+
 	BOOL isPath;
 	
 	if (url == nil || output == nil) {
@@ -34,6 +37,7 @@ int main (int argc, const char * argv[]) {
 	
 	WebArchive *webarchive;
 	KBWebArchiver *archiver = [[KBWebArchiver alloc] initWithURLString:url isFilePath:isPath];
+	archiver.localResourceLoadingOnly = localOnly;
 	webarchive = [archiver webArchive];
 	NSData *data = [webarchive data];
 	NSError *error = [archiver error];

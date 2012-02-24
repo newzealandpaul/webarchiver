@@ -19,6 +19,8 @@
 
 @implementation KBWebArchiver
 
+@synthesize localResourceLoadingOnly;
+
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)flag
 {
 	NSURL *aURL;	
@@ -43,6 +45,7 @@
 	{
 		URL = [aURL retain];
 		archiveInformation = nil;
+		localResourceLoadingOnly = NO;
 	}
 	return self;
 }
@@ -157,6 +160,7 @@
 	// We have to create a web view, load the web page into this web view, and then grab the web archive and information from there.
 	WebView *webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, 1024, 768)];
 	[webView setFrameLoadDelegate:self];
+	[webView setResourceLoadDelegate:self];
 	[webView setPolicyDelegate:self];
 	
 	finishedLoading = NO;
@@ -188,6 +192,7 @@
 	// Stop loading and then set the delegate to nil.
 	[[webView mainFrame] stopLoading];	// Ensure the frame stops loading, otherwise will crash when released!
 	[webView setFrameLoadDelegate:nil];
+	[webView setResourceLoadDelegate:nil];
 	[webView setPolicyDelegate:nil];
 	
 	// If the load failed, don't set any more data - just return.
@@ -288,6 +293,18 @@
 	}
 	
 	[listener ignore];
+}
+
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
+{
+	if (!localResourceLoadingOnly 
+		|| (localResourceLoadingOnly && [[[request URL] scheme] isEqualToString:@"file"]))
+	{
+		return request;
+	} else {
+		return nil;
+	}
 }
 
 @end
