@@ -166,7 +166,7 @@
 	}
 	
 	// We have to create a web view, load the web page into this web view, and then grab the web archive and information from there.
-	WebView *webView = [[WebView alloc] initWithFrame:NSMakeRect(0,0,200,200)];
+	WebView *webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, 1024, 768)];
 	[webView setFrameLoadDelegate:self];
 	[webView setPolicyDelegate:self];
 	
