@@ -19,24 +19,43 @@
 
 @implementation KBWebArchiver
 
+@synthesize localResourceLoadingOnly;
+
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)flag
 {
-	self = [super init];
+	NSURL *aURL;	
 	
-	if (self)
+	if (aURLString == nil)
 	{
-		if (aURLString == nil)
-		{
-			URL = nil;
-		}
-		else
-		{
-			URL = (flag ? [[NSURL alloc] initFileURLWithPath:aURLString] : [[NSURL alloc] initWithString:aURLString]);
-		}
-		
-		archiveInformation = nil;
+		aURL = nil;
 	}
-	return self;
+	else
+	{
+		aURL = (flag ? [NSURL fileURLWithPath:aURLString] : [NSURL URLWithString:aURLString]);
+	}
+	
+	return [self initWithURL:aURL];
+}
+
+- (id)initWithURLString:(NSString *)aURLString
+{
+	NSURL *aURL;	
+	
+	if (aURLString == nil)
+	{
+		aURL = nil;
+	}
+	else 
+	{
+		aURL = [NSURL URLWithString:aURLString];
+	}
+	
+	if (aURL && aURL.scheme) {
+		return [self initWithURL:aURL];
+	}
+	else {
+		return [self initWithURLString:aURLString isFilePath:YES];
+	}
 }
 
 - (id)initWithURL:(NSURL *)aURL
@@ -47,20 +66,14 @@
 	{
 		URL = [aURL retain];
 		archiveInformation = nil;
+		localResourceLoadingOnly = NO;
 	}
 	return self;
 }
 
 - (id)init
 {
-	self = [super init];
-	
-	if (self)
-	{
-		URL = nil;
-		archiveInformation = nil;
-	}
-	return self;
+	return [self initWithURL:nil];
 }
 
 - (void)dealloc
@@ -132,7 +145,7 @@
 	if ([URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
 		return nil;
 	
-	return [archiveInformation objectForKey:@"Error"];
+	return [[[archiveInformation objectForKey:@"Error"] retain] autorelease];
 }
 
 - (void)getWebPage
@@ -152,7 +165,7 @@
 	
 	// We also set a default title for the web page - if all goes well, this will be changed to something more
 	// meaningful in -webView:didReceiveTitle:forFrame:.
-	[archiveInformation setObject:NSLocalizedString(@"Web Page",nil) forKey:@"Title"];
+	[archiveInformation setObject:NSLocalizedString(@"Web Page", nil) forKey:@"Title"];
 	
 	// Check the URL is valid if it is to be downloaded from the 'net.
 	if ([URL isFileURL] == NO && [URL httpIsValid] == NO)
@@ -166,8 +179,9 @@
 	}
 	
 	// We have to create a web view, load the web page into this web view, and then grab the web archive and information from there.
-	WebView *webView = [[WebView alloc] initWithFrame:NSMakeRect(0,0,200,200)];
+	WebView *webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, 1024, 768)];
 	[webView setFrameLoadDelegate:self];
+	[webView setResourceLoadDelegate:self];
 	[webView setPolicyDelegate:self];
 	
 	finishedLoading = NO;
@@ -188,7 +202,7 @@
 	[[webView mainFrame] loadRequest:theRequest];
 	
 	// Wait until the site has finished loading.
-	double resolution = 1.0;
+	NSTimeInterval resolution = 1.0;
 	BOOL isRunning;
 
 	do {
@@ -199,6 +213,7 @@
 	// Stop loading and then set the delegate to nil.
 	[[webView mainFrame] stopLoading];	// Ensure the frame stops loading, otherwise will crash when released!
 	[webView setFrameLoadDelegate:nil];
+	[webView setResourceLoadDelegate:nil];
 	[webView setPolicyDelegate:nil];
 	
 	// If the load failed, don't set any more data - just return.
@@ -299,6 +314,18 @@
 	}
 	
 	[listener ignore];
+}
+
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
+{
+	if (!localResourceLoadingOnly 
+		|| (localResourceLoadingOnly && [[[request URL] scheme] isEqualToString:@"file"]))
+	{
+		return request;
+	} else {
+		return nil;
+	}
 }
 
 @end
