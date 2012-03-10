@@ -5,7 +5,7 @@
 //  Orginal : Keith Blount 2005
 //	Page timeout fix: John Winter 2006
 //  Keith Blount 2008
-//  Code Cleanup: Jan Wei� 2011
+//  Code Cleanup: Jan Weiß 2011
 //
 
 #import "KBWebArchiver.h"
@@ -184,34 +184,77 @@
 	[webView setResourceLoadDelegate:self];
 	[webView setPolicyDelegate:self];
 	
-	finishedLoading = NO;
-	loadFailed = NO;
+	NSError *localLoadingError = nil;
+	BOOL tryLocalLoad = NO;
 	
-	// Set up the load request and try to load the page.
-	NSURLRequestCachePolicy cachePolicy;
+	while (1) {
+		finishedLoading = NO;
+		loadFailed = NO;
+		
+		if (!tryLocalLoad)
+		{
+			// Set up the load request and try to load the page.
+			NSURLRequestCachePolicy cachePolicy;
 #if (MAC_OS_X_VERSION_MIN_REQUIRED < 1050)	
-	cachePolicy = NSURLRequestReloadIgnoringCacheData;
+			cachePolicy = NSURLRequestReloadIgnoringCacheData;
 #else
-	cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+			cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 #endif
+			
+			NSURLRequest *theRequest = [NSURLRequest requestWithURL:URL
+														cachePolicy:cachePolicy
+													timeoutInterval:30];
+			
+			[[webView mainFrame] loadRequest:theRequest];
+		}
+		else
+		{
+			// Falling back to loading data from local file
+			NSData *data = [NSData dataWithContentsOfURL:URL 
+												 options:0 
+												   error:&localLoadingError];
+			if (data != nil)
+			{
+				[[webView mainFrame] loadData:data 
+									 MIMEType:@"text/html" // CHANGEME: Assuming html
+							 textEncodingName:@"UTF-8" // CHANGEME: Assuming UTF8
+									  baseURL:URL];
+			}
+			else
+			{
+				[archiveInformation setObject:localLoadingError forKey:@"Error"];
+				break;
+			}
+		}
+		
+		// Wait until the site has finished loading.
+		NSTimeInterval resolution = 1.0;
+		BOOL isRunning;
+		
+		do {
+			NSDate* next = [NSDate dateWithTimeIntervalSinceNow:resolution]; 
+			isRunning = [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:next];
+		} while (isRunning && finishedLoading == NO);
+		
+		[[webView mainFrame] stopLoading];	// Ensure the frame stops loading, otherwise will crash when released!
+		
+		if (!tryLocalLoad
+			&& loadFailed 
+			&& [URL isFileURL] 
+			&& ((localLoadingError = [archiveInformation objectForKey:@"Error"]) != nil)
+			&& ([localLoadingError code] == 102)) // Frame load interrupted
+		{
+			// This can occur if the local file we are trying to load is missing its extension (usually “.html”)
+			tryLocalLoad = YES;
+			[archiveInformation removeObjectForKey:@"Error"];
+			continue;
+		}
+		else
+		{
+			break;
+		}
+	}
 	
-	NSURLRequest *theRequest = [NSURLRequest requestWithURL:URL
-												cachePolicy:cachePolicy
-											timeoutInterval:30];
-	
-	[[webView mainFrame] loadRequest:theRequest];
-	
-	// Wait until the site has finished loading.
-	NSTimeInterval resolution = 1.0;
-	BOOL isRunning;
-
-	do {
-		NSDate* next = [NSDate dateWithTimeIntervalSinceNow:resolution]; 
-		isRunning = [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:next];
-	} while (isRunning && finishedLoading == NO);
-	
-	// Stop loading and then set the delegate to nil.
-	[[webView mainFrame] stopLoading];	// Ensure the frame stops loading, otherwise will crash when released!
 	[webView setFrameLoadDelegate:nil];
 	[webView setResourceLoadDelegate:nil];
 	[webView setPolicyDelegate:nil];
