@@ -19,6 +19,7 @@
 
 @implementation KBWebArchiver
 
+@synthesize URL = _URL;
 @synthesize localResourceLoadingOnly;
 
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)flag
@@ -64,7 +65,7 @@
 	
 	if (self)
 	{
-		URL = [aURL retain];
+		_URL = [aURL retain];
 		archiveInformation = nil;
 		localResourceLoadingOnly = NO;
 	}
@@ -78,44 +79,31 @@
 
 - (void)dealloc
 {
-	[URL release];
+	[_URL release];
 	[archiveInformation release];
 	
 	[super dealloc];
 }
 
-- (void)setURL:(NSURL *)aURL
-{
-	[aURL retain];
-	[URL release];
-	URL = aURL;
-}
-
-- (NSURL *)URL
-{
-	return URL;
-}
-
 - (void)setURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath
 {
-	[URL release];
-	URL = (isFilePath ? [[NSURL alloc] initFileURLWithPath:aURLString] : [[NSURL alloc] initWithString:aURLString]);
+	self.URL = (isFilePath ? [[NSURL alloc] initFileURLWithPath:aURLString] : [[NSURL alloc] initWithString:aURLString]);
 }
 
 - (NSString *)URLString
 {
-	return ([URL isFileURL] ? [URL path] : [URL absoluteString]);
+	return ([_URL isFileURL] ? [_URL path] : [_URL absoluteString]);
 }
 
 - (BOOL)isFilePath
 {
-	return [URL isFileURL];
+	return [_URL isFileURL];
 }
 
 - (WebArchive *)webArchive
 {
 	// If we changed the URL since the last time we checked, then (re)generate the web archive information.
-	if ([URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
 		[self getWebPage];
 
 	return [archiveInformation objectForKey:@"WebArchive"];
@@ -124,7 +112,7 @@
 - (NSString *)string
 {
 	// If we changed the URL since the last time we checked, then (re)generate the web archive information.
-	if ([URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
 		[self getWebPage];
 
 	return [archiveInformation objectForKey:@"String"];
@@ -133,7 +121,7 @@
 - (NSString *)title
 {
 	// If we changed the URL since the last time we checked, then (re)generate the web archive information.
-	if ([URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
 		[self getWebPage];
 
 	return [archiveInformation objectForKey:@"Title"];
@@ -142,7 +130,7 @@
 - (NSError *)error
 {
 	// If we changed the URL since the last time we checked, then we have no error to report.
-	if ([URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:[archiveInformation objectForKey:@"URL"]] == NO)
 		return nil;
 	
 	return [[[archiveInformation objectForKey:@"Error"] retain] autorelease];
@@ -153,7 +141,7 @@
 	[archiveInformation release];
 	archiveInformation = [[NSMutableDictionary alloc] init];
 	
-	if (!URL)
+	if (_URL == nil)
 	{
 		//NSBeep();
 		NSLog (@"*** KBWebArchiver error: No URL passed in. ***");
@@ -161,14 +149,14 @@
 	}
 	
 	// Add the URL.
-	[archiveInformation setObject:URL forKey:@"URL"];
+	[archiveInformation setObject:_URL forKey:@"URL"];
 	
 	// We also set a default title for the web page - if all goes well, this will be changed to something more
 	// meaningful in -webView:didReceiveTitle:forFrame:.
 	[archiveInformation setObject:NSLocalizedString(@"Web Page", nil) forKey:@"Title"];
 	
 	// Check the URL is valid if it is to be downloaded from the 'net.
-	if ([URL isFileURL] == NO && [URL httpIsValid] == NO)
+	if ([_URL isFileURL] == NO && [_URL httpIsValid] == NO)
 	{
 		NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 		[userInfo setObject:NSLocalizedString(@"Invalid URL", @"") forKey:NSLocalizedDescriptionKey];
@@ -201,7 +189,7 @@
 			cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 #endif
 			
-			NSURLRequest *theRequest = [NSURLRequest requestWithURL:URL
+			NSURLRequest *theRequest = [NSURLRequest requestWithURL:_URL
 														cachePolicy:cachePolicy
 													timeoutInterval:30];
 			
@@ -210,7 +198,7 @@
 		else
 		{
 			// Falling back to loading data from local file
-			NSData *data = [NSData dataWithContentsOfURL:URL 
+			NSData *data = [NSData dataWithContentsOfURL:_URL
 												 options:0 
 												   error:&localLoadingError];
 			if (data != nil)
@@ -218,7 +206,7 @@
 				[[webView mainFrame] loadData:data 
 									 MIMEType:@"text/html" // CHANGEME: Assuming html
 							 textEncodingName:@"UTF-8" // CHANGEME: Assuming UTF8
-									  baseURL:URL];
+									  baseURL:_URL];
 			}
 			else
 			{
@@ -240,7 +228,7 @@
 		
 		if (!tryLocalLoad
 			&& loadFailed 
-			&& [URL isFileURL] 
+			&& [_URL isFileURL]
 			&& ((localLoadingError = [archiveInformation objectForKey:@"Error"]) != nil)
 			&& ([localLoadingError code] == 102)) // Frame load interrupted
 		{

@@ -12,7 +12,7 @@
 
 @interface KBWebArchiver : NSObject
 {
-	NSURL *URL;
+	NSURL *_URL;
 	
 	NSMutableDictionary *archiveInformation;
 	BOOL finishedLoading;
@@ -21,14 +21,12 @@
 	BOOL localResourceLoadingOnly;
 }
 
+@property (nonatomic, readwrite, retain) NSURL *URL;
 @property (nonatomic) BOOL localResourceLoadingOnly;
 
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath;
 - (id)initWithURLString:(NSString *)aURLString;
 - (id)initWithURL:(NSURL *)aURL;
-
-- (void)setURL:(NSURL *)aURL;
-- (NSURL *)URL;
 
 - (void)setURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath;
 - (NSString *)URLString;
