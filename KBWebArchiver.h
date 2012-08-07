@@ -14,11 +14,11 @@
 {
 	NSURL *_URL;
 	
-	NSMutableDictionary *archiveInformation;
-	BOOL finishedLoading;
-	BOOL loadFailed;
+	NSMutableDictionary *_archiveInformation;
+	BOOL _finishedLoading;
+	BOOL _loadFailed;
 
-	BOOL localResourceLoadingOnly;
+	BOOL _localResourceLoadingOnly;
 }
 
 @property (nonatomic, readwrite, retain) NSURL *URL;
