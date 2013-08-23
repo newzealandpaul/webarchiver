@@ -216,13 +216,14 @@
 		}
 		
 		// Wait until the site has finished loading.
-		NSTimeInterval resolution = 1.0;
-		BOOL isRunning;
+		NSRunLoop *currentRunLoop = [NSRunLoop currentRunLoop];
+		NSTimeInterval resolution = _localResourceLoadingOnly ? 0.1 : 0.01;
+		BOOL isRunning = YES;
 		
-		do {
-			NSDate* next = [NSDate dateWithTimeIntervalSinceNow:resolution]; 
-			isRunning = [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:next];
-		} while (isRunning && _finishedLoading == NO);
+		while (isRunning && _finishedLoading == NO) {
+			NSDate *next = [NSDate dateWithTimeIntervalSinceNow:resolution];
+			isRunning = [currentRunLoop runMode:NSDefaultRunLoopMode beforeDate:next];
+		}
 		
 		[[webView mainFrame] stopLoading];	// Ensure the frame stops loading, otherwise will crash when released!
 		
