@@ -65,7 +65,7 @@
 	
 	if (self)
 	{
-		_URL = [aURL retain];
+		_URL = aURL;
 		_archiveInformation = nil;
 		_localResourceLoadingOnly = NO;
 	}
@@ -77,13 +77,6 @@
 	return [self initWithURL:nil];
 }
 
-- (void)dealloc
-{
-	[_URL release];
-	[_archiveInformation release];
-	
-	[super dealloc];
-}
 
 - (void)setURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath
 {
@@ -133,12 +126,11 @@
 	if ([_URL isEqual:_archiveInformation[@"URL"]] == NO)
 		return nil;
 	
-	return [[_archiveInformation[@"Error"] retain] autorelease];
+	return _archiveInformation[@"Error"];
 }
 
 - (void)getWebPage
 {
-	[_archiveInformation release];
 	_archiveInformation = [[NSMutableDictionary alloc] init];
 	
 	if (_URL == nil)
@@ -251,7 +243,6 @@
 	// If the load failed, don't set any more data - just return.
 	if (_loadFailed)
 	{
-		[webView release];
 		
 		if (_archiveInformation[@"Error"] == nil)
 		{
@@ -289,7 +280,6 @@
 	}
 
 	
-	[webView release];
 }
 
 // Oh dear, this can cause some crashes - eg. importing Yahoo...

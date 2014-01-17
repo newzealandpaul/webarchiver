@@ -21,7 +21,7 @@
 	BOOL _localResourceLoadingOnly;
 }
 
-@property (nonatomic, readwrite, retain) NSURL *URL;
+@property (nonatomic, readwrite, strong) NSURL *URL;
 @property (nonatomic) BOOL localResourceLoadingOnly;
 
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath;
