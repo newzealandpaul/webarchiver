@@ -103,37 +103,37 @@
 - (WebArchive *)webArchive
 {
 	// If we changed the URL since the last time we checked, then (re)generate the web archive information.
-	if ([_URL isEqual:[_archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:_archiveInformation[@"URL"]] == NO)
 		[self getWebPage];
 
-	return [_archiveInformation objectForKey:@"WebArchive"];
+	return _archiveInformation[@"WebArchive"];
 }
 
 - (NSString *)string
 {
 	// If we changed the URL since the last time we checked, then (re)generate the web archive information.
-	if ([_URL isEqual:[_archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:_archiveInformation[@"URL"]] == NO)
 		[self getWebPage];
 
-	return [_archiveInformation objectForKey:@"String"];
+	return _archiveInformation[@"String"];
 }
 
 - (NSString *)title
 {
 	// If we changed the URL since the last time we checked, then (re)generate the web archive information.
-	if ([_URL isEqual:[_archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:_archiveInformation[@"URL"]] == NO)
 		[self getWebPage];
 
-	return [_archiveInformation objectForKey:@"Title"];
+	return _archiveInformation[@"Title"];
 }
 
 - (NSError *)error
 {
 	// If we changed the URL since the last time we checked, then we have no error to report.
-	if ([_URL isEqual:[_archiveInformation objectForKey:@"URL"]] == NO)
+	if ([_URL isEqual:_archiveInformation[@"URL"]] == NO)
 		return nil;
 	
-	return [[[_archiveInformation objectForKey:@"Error"] retain] autorelease];
+	return [[_archiveInformation[@"Error"] retain] autorelease];
 }
 
 - (void)getWebPage
@@ -149,19 +149,19 @@
 	}
 	
 	// Add the URL.
-	[_archiveInformation setObject:_URL forKey:@"URL"];
+	_archiveInformation[@"URL"] = _URL;
 	
 	// We also set a default title for the web page - if all goes well, this will be changed to something more
 	// meaningful in -webView:didReceiveTitle:forFrame:.
-	[_archiveInformation setObject:NSLocalizedString(@"Web Page", nil) forKey:@"Title"];
+	_archiveInformation[@"Title"] = NSLocalizedString(@"Web Page", nil);
 	
 	// Check the URL is valid if it is to be downloaded from the 'net.
 	if ([_URL isFileURL] == NO && [_URL httpIsValid] == NO)
 	{
 		NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-		[userInfo setObject:NSLocalizedString(@"Invalid URL", @"") forKey:NSLocalizedDescriptionKey];
-		[userInfo setObject:NSLocalizedString(@"The URL was invalid and so could not be converted to a web archive.",nil) forKey:NSLocalizedRecoverySuggestionErrorKey];
-		[_archiveInformation setObject:[NSError errorWithDomain:@"" code:0 userInfo:userInfo] forKey:@"Error"];
+		userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Invalid URL", @"");
+		userInfo[NSLocalizedRecoverySuggestionErrorKey] = NSLocalizedString(@"The URL was invalid and so could not be converted to a web archive.",nil);
+		_archiveInformation[@"Error"] = [NSError errorWithDomain:@"" code:0 userInfo:userInfo];
 		
 		return;
 	}
@@ -210,7 +210,7 @@
 			}
 			else
 			{
-				[_archiveInformation setObject:localLoadingError forKey:@"Error"];
+				_archiveInformation[@"Error"] = localLoadingError;
 				break;
 			}
 		}
@@ -230,7 +230,7 @@
 		if (!tryLocalLoad
 			&& _loadFailed 
 			&& [_URL isFileURL]
-			&& ((localLoadingError = [_archiveInformation objectForKey:@"Error"]) != nil)
+			&& ((localLoadingError = _archiveInformation[@"Error"]) != nil)
 			&& ([localLoadingError code] == 102)) // Frame load interrupted
 		{
 			// This can occur if the local file we are trying to load is missing its extension (usually “.html”)
@@ -253,12 +253,12 @@
 	{
 		[webView release];
 		
-		if ([_archiveInformation objectForKey:@"Error"] == nil)
+		if (_archiveInformation[@"Error"] == nil)
 		{
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-			[userInfo setObject:NSLocalizedString(@"Web Page Failed to Load", @"") forKey:NSLocalizedDescriptionKey];
-			[userInfo setObject:NSLocalizedString(@"The web page at the given URL failed to load and so could not be converted to a WebArchive.",nil) forKey:NSLocalizedRecoverySuggestionErrorKey];
-			[_archiveInformation setObject:[NSError errorWithDomain:@"" code:0 userInfo:userInfo] forKey:@"Error"];
+			userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Web Page Failed to Load", @"");
+			userInfo[NSLocalizedRecoverySuggestionErrorKey] = NSLocalizedString(@"The web page at the given URL failed to load and so could not be converted to a WebArchive.",nil);
+			_archiveInformation[@"Error"] = [NSError errorWithDomain:@"" code:0 userInfo:userInfo];
 		}
 		
 		return;
@@ -269,7 +269,7 @@
 	if ([[[[webView mainFrame] frameView] documentView] conformsToProtocol:@protocol(WebDocumentText)])
 		string = [(id <WebDocumentText>)[[[webView mainFrame] frameView] documentView] string];
 	
-	[_archiveInformation setObject:string forKey:@"String"];
+	_archiveInformation[@"String"] = string;
 	
 	// the -dataSource method was causing some crashes and also some web pages only half-loaded;
 	// using the -DOMDocument method seems to work much better.
@@ -278,14 +278,14 @@
 	WebArchive *webArchive = [[[webView mainFrame] DOMDocument] webArchive];
 	if (webArchive)
 	{
-		[_archiveInformation setObject:webArchive forKey:@"WebArchive"];
+		_archiveInformation[@"WebArchive"] = webArchive;
 	}
-	else if ([_archiveInformation objectForKey:@"Error"] == nil)
+	else if (_archiveInformation[@"Error"] == nil)
 	{
 		NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-		[userInfo setObject:NSLocalizedString(@"Web Archive Creation Failed", @"") forKey:NSLocalizedDescriptionKey];
-		[userInfo setObject:NSLocalizedString(@"A web archive could not be created from the page at the given URL.",nil) forKey:NSLocalizedRecoverySuggestionErrorKey];
-		[_archiveInformation setObject:[NSError errorWithDomain:@"" code:0 userInfo:userInfo] forKey:@"Error"];
+		userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Web Archive Creation Failed", @"");
+		userInfo[NSLocalizedRecoverySuggestionErrorKey] = NSLocalizedString(@"A web archive could not be created from the page at the given URL.",nil);
+		_archiveInformation[@"Error"] = [NSError errorWithDomain:@"" code:0 userInfo:userInfo];
 	}
 
 	
@@ -308,7 +308,7 @@
 		_loadFailed = YES;
 		_finishedLoading = YES;
 		if (error)
-			[_archiveInformation setObject:error forKey:@"Error"];
+			_archiveInformation[@"Error"] = error;
 	}
 }
 
@@ -325,7 +325,7 @@
 		}
 		
 		if (error)
-			[_archiveInformation setObject:error forKey:@"Error"];
+			_archiveInformation[@"Error"] = error;
 	}
 }
 
@@ -333,7 +333,7 @@
 - (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame
 {
    if (frame == [sender mainFrame] && title != nil)
-	   [_archiveInformation setObject:title forKey:@"Title"];
+	   _archiveInformation[@"Title"] = title;
 }
 
 // This method handles loading web archives - without this, a lot of web archives will not load...
