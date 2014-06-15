@@ -189,6 +189,7 @@
 				GCC_PREFIX_HEADER = webarchiver_Prefix.pch;
 				INSTALL_PATH = "$(HOME)/bin";
 				PRODUCT_NAME = webarchiver;
+				SDKROOT = macosx;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -203,6 +204,7 @@
 				GCC_PREFIX_HEADER = webarchiver_Prefix.pch;
 				INSTALL_PATH = "$(HOME)/bin";
 				PRODUCT_NAME = webarchiver;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
