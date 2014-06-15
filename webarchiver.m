@@ -17,7 +17,7 @@ int main (int argc, const char * argv[]) {
 	BOOL localOnly = [localOnlyString isEqualToString:@"YES"];
 
 	if (url == nil || output == nil) {
-		fprintf(stderr, "webarchiver 0.6\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
+		fprintf(stderr, "webarchiver 0.7\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
 		exit(1);
 	}
 	
