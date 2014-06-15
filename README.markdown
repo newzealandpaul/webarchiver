@@ -26,6 +26,12 @@ The easiest way to install webarchiver is using
 
 ##Release notes
 
+Version 0.7 : 
+
+- Modernized and improved the code.
+- Support for loading local HTML files without an extension.
+- If the output path is a folder, we now save the webarchive there.
+
 Version 0.6 : Cleaned up Github release.
 
 Version 0.5 : More robust KBWebArchiver ([Keith Blount][] and [Jan Weiß][]).
