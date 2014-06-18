@@ -31,6 +31,7 @@ Version 0.7 :
 - Modernized and improved the code.
 - Support for loading local HTML files without an extension.
 - If the output path is a folder, we now save the webarchive there.
+- **Big thanks to [Jan Weiß][] for the work done in this release**
 
 Version 0.6 : Cleaned up Github release.
 
@@ -46,9 +47,9 @@ Version 0.1 : Initial release.
 
 ##Credits
 
--   Most of the credit for this goes to [Keith Blount][] for his very
+-   [Jan Weiß][] for his code fixes, clean up, 0.4 and 0.7 release. 
+-   [Keith Blount][] for his very
     useful KBWebArchiver class.
--   [Jan Weiß][] for his code fixes, clean up and 0.4 release. 
 -   [John Winter][] for testing and bug fixing. Thanks John.
 -   [Rob Griffiths][] for hosting a copy of the source when my blog was
     down.
