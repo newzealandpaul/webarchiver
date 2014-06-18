@@ -31,7 +31,7 @@
 	cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 #endif
 	
-	NSURLRequest *request = [NSURLRequest requestWithURL:[[self copy] autorelease]	// Don't actually send self, just in case...
+	NSURLRequest *request = [NSURLRequest requestWithURL:[self copy]	// Don't actually send self, just in case...
 											 cachePolicy:cachePolicy
 										 timeoutInterval:30];
 	NSHTTPURLResponse *response = nil;

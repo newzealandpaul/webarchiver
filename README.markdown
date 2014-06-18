@@ -8,7 +8,7 @@ Webarchiver allows you to create Safari .webarchive files from the command line.
 
     $./webarchiver
 
-    webarchiver 0.6
+    webarchiver 0.7
     Usage: webarchiver -url URL -output FILE
     Example: webarchiver -url http://www.google.com -output google.webarchive
     -url    http:// or path to local file
@@ -25,6 +25,12 @@ The easiest way to install webarchiver is using
     `sudo port install webarchiver`  
 
 ##Release notes
+
+Version 0.7 : 
+
+- Modernized and improved the code.
+- Support for loading local HTML files without an extension.
+- If the output path is a folder, we now save the webarchive there.
 
 Version 0.6 : Cleaned up Github release.
 

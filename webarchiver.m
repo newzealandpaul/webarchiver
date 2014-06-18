@@ -17,12 +17,17 @@ int main (int argc, const char * argv[]) {
 	BOOL localOnly = [localOnlyString isEqualToString:@"YES"];
 
 	if (url == nil || output == nil) {
-		fprintf(stderr, "webarchiver 0.6\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
+		fprintf(stderr, "webarchiver 0.7\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
 		exit(1);
 	}
 	
-	NSString *ext = @".webarchive";
-	if (![output hasSuffix:ext]) {
+	BOOL isDirectory;
+	BOOL diskItemExists = [[NSFileManager defaultManager] fileExistsAtPath:output 
+														   isDirectory:&isDirectory];
+	
+	NSString *ext = @"webarchive";
+	if (![[output pathExtension] isEqualToString:ext]
+		&& !isDirectory) {
 		fprintf(stderr, "Warning: Output file does not have the .webarchive file extension\n");
 	}
 
@@ -31,6 +36,7 @@ int main (int argc, const char * argv[]) {
 	KBWebArchiver *archiver = [[KBWebArchiver alloc] initWithURLString:url];
 	archiver.localResourceLoadingOnly = localOnly;
 	webarchive = [archiver webArchive];
+	NSString *title = [archiver title];
 	NSData *data = [webarchive data];
 	NSError *error = [archiver error];
 	[archiver release];
@@ -41,6 +47,15 @@ int main (int argc, const char * argv[]) {
 		
 		[pool drain];
 		return EXIT_FAILURE;
+	}
+	
+	if (diskItemExists && isDirectory) {
+		NSString *cleanedTitle = [title stringByReplacingOccurrencesOfString:@"/" 
+																  withString:@":" 
+																	 options:NSLiteralSearch 
+																	   range:NSMakeRange(0, [title length])];
+		output = [output stringByAppendingPathComponent:cleanedTitle];
+		output = [output stringByAppendingPathExtension:ext];
 	}
 	
 	BOOL success = [data writeToFile:output atomically:NO];
