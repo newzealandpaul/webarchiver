@@ -10,6 +10,15 @@
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
 
+extern NSString *const KBWebArchiverErrorDomain;
+
+typedef NS_ENUM(NSUInteger, KBWebArchiverErrorCode) {
+    KBWebArchiverErrorCodeUnknown = 0,
+    KBWebArchiverErrorCodeInvalidURL = 1,
+    KBWebArchiverErrorCodeLoadFailed = 2,
+    KBWebArchiverErrorCodeArchiveCreationFailed = 3
+};
+
 @interface KBWebArchiver : NSObject
 {
 	NSURL *_URL;
