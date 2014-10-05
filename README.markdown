@@ -26,7 +26,7 @@ The easiest way to install webarchiver is using
 
 ##Release notes
 
-Version 0.9 : Removed man page template. Updated Version number in code.
+Version 0.9 : Removed man page template. Updated Version number in code. Thanks [Kurt Hindenburg][]
 
 Version 0.8 : [Matias Piipari][] fixed error codes.
 
@@ -66,3 +66,4 @@ Version 0.1 : Initial release.
   [John Winter]: http://www.shipsomecode.com/
   [Keith Blount]: http://www.literatureandlatte.com/
   [Rob Griffiths]: http://www.macosxhints.com/
+  [Kurt Hindenburg] : https://github.com/kurthindenburg?tab=activity
