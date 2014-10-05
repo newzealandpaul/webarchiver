@@ -66,4 +66,4 @@ Version 0.1 : Initial release.
   [John Winter]: http://www.shipsomecode.com/
   [Keith Blount]: http://www.literatureandlatte.com/
   [Rob Griffiths]: http://www.macosxhints.com/
-  [Kurt Hindenburg] : https://github.com/kurthindenburg?tab=activity
+  [Kurt Hindenburg]: https://github.com/kurthindenburg?tab=activity
