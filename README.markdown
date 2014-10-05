@@ -58,6 +58,7 @@ Version 0.1 : Initial release.
     down.
 -   Boey Maun Suang for creating a MacPort
 
+  [Matias Piipari]: https://github.com/mz2
   [MacPorts]: http://www.macports.org/
   [Jan Weiß]: https://github.com/JanX2/webarchiver
   [John Winter]: http://www.shipsomecode.com/
