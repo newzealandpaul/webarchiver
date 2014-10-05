@@ -13,6 +13,8 @@
 #import "NSURL+ValidityChecking.h"
 
 
+NSString *const KBWebArchiverErrorDomain = @"KBWebArchiverErrorDomain";
+
 @interface KBWebArchiver (Private)
 - (void)getWebPage;
 @end
@@ -153,7 +155,9 @@
 		NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 		userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Invalid URL", @"");
 		userInfo[NSLocalizedRecoverySuggestionErrorKey] = NSLocalizedString(@"The URL was invalid and so could not be converted to a web archive.",nil);
-		_archiveInformation[@"Error"] = [NSError errorWithDomain:@"" code:0 userInfo:userInfo];
+		_archiveInformation[@"Error"] = [NSError errorWithDomain:KBWebArchiverErrorDomain
+                                                            code:KBWebArchiverErrorCodeInvalidURL
+                                                        userInfo:userInfo];
 		
 		return;
 	}
@@ -249,7 +253,9 @@
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Web Page Failed to Load", @"");
 			userInfo[NSLocalizedRecoverySuggestionErrorKey] = NSLocalizedString(@"The web page at the given URL failed to load and so could not be converted to a WebArchive.",nil);
-			_archiveInformation[@"Error"] = [NSError errorWithDomain:@"" code:0 userInfo:userInfo];
+			_archiveInformation[@"Error"] = [NSError errorWithDomain:KBWebArchiverErrorDomain
+                                                                code:KBWebArchiverErrorCodeLoadFailed
+                                                            userInfo:userInfo];
 		}
 		
 		return;
@@ -276,7 +282,9 @@
 		NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 		userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Web Archive Creation Failed", @"");
 		userInfo[NSLocalizedRecoverySuggestionErrorKey] = NSLocalizedString(@"A web archive could not be created from the page at the given URL.",nil);
-		_archiveInformation[@"Error"] = [NSError errorWithDomain:@"" code:0 userInfo:userInfo];
+		_archiveInformation[@"Error"] = [NSError errorWithDomain:KBWebArchiverErrorDomain
+                                                            code:KBWebArchiverErrorCodeArchiveCreationFailed
+                                                        userInfo:userInfo];
 	}
 
 	
