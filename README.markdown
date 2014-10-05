@@ -50,7 +50,7 @@ Version 0.2 : [John Winter][] fixed page loading issue.
 Version 0.1 : Initial release.
 
 ##Credits
-
+-   [Kurt Hindenburg][] for maintenance. 
 -   [Matias Piipari][] for fixing error codes.
 -   [Jan Weiß][] for his code fixes, clean up, 0.4 and 0.7 release. 
 -   [Keith Blount][] for his very
