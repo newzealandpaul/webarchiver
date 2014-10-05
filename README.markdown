@@ -26,6 +26,8 @@ The easiest way to install webarchiver is using
 
 ##Release notes
 
+Version 0.8 : [Matias Piipari][] fixed error codes.
+
 Version 0.7 : 
 
 - Modernized and improved the code.
@@ -47,6 +49,7 @@ Version 0.1 : Initial release.
 
 ##Credits
 
+-   [Matias Piipari][] for fixing error codes.
 -   [Jan Weiß][] for his code fixes, clean up, 0.4 and 0.7 release. 
 -   [Keith Blount][] for his very
     useful KBWebArchiver class.
