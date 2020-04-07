@@ -221,6 +221,10 @@ NSString *const KBWebArchiverErrorDomain = @"KBWebArchiverErrorDomain";
 			isRunning = [currentRunLoop runMode:NSDefaultRunLoopMode beforeDate:next];
 		}
 		
+		if (_customJS != nil) {
+			[webView stringByEvaluatingJavaScriptFromString: _customJS];
+		}
+		
 		[[webView mainFrame] stopLoading];	// Ensure the frame stops loading, otherwise will crash when released!
 		
 		if (!tryLocalLoad
