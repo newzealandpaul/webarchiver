@@ -25,6 +25,9 @@ The easiest way to install webarchiver is using
    
     `sudo port install webarchiver`  
 
+    `brew install webarchiver`  
+
+
 ## Release notes
 
 Version 0.10 : Added the ability to execute custom javascript on page load. Thanks [Viktor Szakats](https://github.com/vszakats)
