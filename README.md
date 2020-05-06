@@ -27,6 +27,8 @@ The easiest way to install webarchiver is using
 
 ## Release notes
 
+Version 0.10 : Added the ability to execute custom javascript on page load. Thanks [Viktor Szakats](https://github.com/vszakats)
+
 Version 0.9 : Removed man page template. Updated Version number in code. Thanks [Kurt Hindenburg][]
 
 Version 0.8 : [Matias Piipari][] fixed error codes.
@@ -60,6 +62,7 @@ Version 0.1 : Initial release.
 -   [Rob Griffiths][] for hosting a copy of the source when my blog was
     down.
 -   Boey Maun Suang for creating a MacPort
+-   [Viktor Szakats](https://github.com/vszakats) for js option.
 
   [Matias Piipari]: https://github.com/mz2
   [MacPorts]: https://www.macports.org/
