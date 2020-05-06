@@ -20,12 +20,11 @@ Do not forget the ‘http://’ if you want to archive a webpage. If no
 
 ## Download
 
-The easiest way to install webarchiver is using
-[MacPorts][][:][MacPorts]  
+The easiest way to install webarchiver is by using MacPorts or HomeBrew.
    
-    `sudo port install webarchiver`  
+    $ brew install webarchiver
 
-    `brew install webarchiver`  
+    $ sudo port install webarchiver
 
 
 ## Release notes
