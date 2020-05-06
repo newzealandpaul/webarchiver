@@ -64,7 +64,7 @@ Version 0.1 : Initial release.
 -   [Rob Griffiths][] for hosting a copy of the source when my blog was
     down.
 -   Boey Maun Suang for creating a MacPort
--   [Viktor Szakats](https://github.com/vszakats) for js option.
+-   [Viktor Szakats](https://github.com/vszakats) for js option and HomeBrew.
 
   [Matias Piipari]: https://github.com/mz2
   [MacPorts]: https://www.macports.org/
