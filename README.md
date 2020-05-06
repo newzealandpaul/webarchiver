@@ -13,7 +13,7 @@ Webarchiver allows you to create Safari .webarchive files from the command line.
     Example: webarchiver -url https://www.google.com -output google.webarchive
     -url    http:// or path to local file
     -js     Custom JavaScript to execute after loading the page
-    -output File to write webarchive to</code>
+    -output File to write the webarchive to.
 
 Do not forget the ‘http://’ if you want to archive a webpage. If no
 ‘http://’ is present then webarchiver attempts to archive a local file.
