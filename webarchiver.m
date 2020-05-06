@@ -13,11 +13,12 @@ int main (int argc, const char * argv[]) {
 	NSString *url = [args stringForKey:@"url"];
 	NSString *localOnlyString = [args stringForKey:@"local"];
 	NSString *output = [args stringForKey:@"output"];
+	NSString *js = [args stringForKey:@"js"];
 
 	BOOL localOnly = [localOnlyString isEqualToString:@"YES"];
 
 	if (url == nil || output == nil) {
-		fprintf(stderr, "webarchiver 0.9\nUsage: webarchiver -url URL -output FILE \nExample: webarchiver -url http://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
+		fprintf(stderr, "webarchiver 0.9\nUsage: webarchiver -url URL [-js JAVASCRIPT] -output FILE \nExample: webarchiver -url https://www.google.com -output google.webarchive\n-url\thttp:// or path to local file\n-js\tCustom JavaScript to execute after loading the page\n-output\tFile to write webarchive to\n\nUpdates can be found at https://github.com/newzealandpaul/webarchiver/\n");
 		exit(1);
 	}
 	
@@ -35,6 +36,9 @@ int main (int argc, const char * argv[]) {
 	WebArchive *webarchive;
 	KBWebArchiver *archiver = [[KBWebArchiver alloc] initWithURLString:url];
 	archiver.localResourceLoadingOnly = localOnly;
+	if (js != nil) {
+		archiver.customJS = js;
+	}
 	webarchive = [archiver webArchive];
 	NSString *title = [archiver title];
 	NSData *data = [webarchive data];

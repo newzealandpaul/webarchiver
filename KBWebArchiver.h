@@ -22,7 +22,8 @@ typedef NS_ENUM(NSUInteger, KBWebArchiverErrorCode) {
 @interface KBWebArchiver : NSObject
 {
 	NSURL *_URL;
-	
+	NSString *_customJS;
+
 	NSMutableDictionary *_archiveInformation;
 	BOOL _finishedLoading;
 	BOOL _loadFailed;
@@ -31,6 +32,7 @@ typedef NS_ENUM(NSUInteger, KBWebArchiverErrorCode) {
 }
 
 @property (nonatomic, readwrite, strong) NSURL *URL;
+@property (nonatomic, readwrite, strong) NSString *customJS;
 @property (nonatomic) BOOL localResourceLoadingOnly;
 
 - (id)initWithURLString:(NSString *)aURLString isFilePath:(BOOL)isFilePath;

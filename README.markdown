@@ -2,16 +2,17 @@
 
 Webarchiver allows you to create Safari .webarchive files from the command line. Webarchives are a convenient way to store a webpage and its associated files (images, css, javascript, etc) in a single file. It is very simple to use:
 
-    ./webarchiver -url http://www.google.com -output google.webarchive
+    ./webarchiver -url https://www.google.com -output google.webarchive
 
 ##Usage
 
     $./webarchiver
 
     webarchiver 0.9
-    Usage: webarchiver -url URL -output FILE
-    Example: webarchiver -url http://www.google.com -output google.webarchive
+    Usage: webarchiver -url URL [-js JAVASCRIPT] -output FILE
+    Example: webarchiver -url https://www.google.com -output google.webarchive
     -url    http:// or path to local file
+    -js     Custom JavaScript to execute after loading the page
     -output File to write webarchive to</code>
 
 Do not forget the ‘http://’ if you want to archive a webpage. If no
@@ -61,9 +62,9 @@ Version 0.1 : Initial release.
 -   Boey Maun Suang for creating a MacPort
 
   [Matias Piipari]: https://github.com/mz2
-  [MacPorts]: http://www.macports.org/
+  [MacPorts]: https://www.macports.org/
   [Jan Weiß]: https://github.com/JanX2/webarchiver
   [John Winter]: http://www.shipsomecode.com/
-  [Keith Blount]: http://www.literatureandlatte.com/
-  [Rob Griffiths]: http://www.macosxhints.com/
+  [Keith Blount]: https://www.literatureandlatte.com/
+  [Rob Griffiths]: https://www.macosxhints.com/
   [Kurt Hindenburg]: https://github.com/kurthindenburg?tab=activity
