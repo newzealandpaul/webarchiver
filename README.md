@@ -54,6 +54,10 @@ Version 0.2 : [John Winter][] fixed page loading issue.
 
 Version 0.1 : Initial release.
 
+## License 
+
+GNU GENERAL PUBLIC LICENSE Version 3
+
 ## Credits
 -   [Kurt Hindenburg][] for maintenance. 
 -   [Matias Piipari][] for fixing error codes.
