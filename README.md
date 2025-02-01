@@ -8,7 +8,7 @@ Webarchiver allows you to create Safari .webarchive files from the command line.
 
     $./webarchiver
 
-    webarchiver 0.12
+    webarchiver 0.13
     Usage: webarchiver -url URL [-js JAVASCRIPT] -output FILE
     Example: webarchiver -url https://www.google.com -output google.webarchive
     -url    http:// or path to local file
@@ -28,6 +28,8 @@ The easiest way to install webarchiver is by using HomeBrew or MacPorts.
 
 
 ## Release notes
+
+Version 0.13 : Fixed issue with compiling on case-sensitive filesystems. Thanks [Ryan Carsten Schmidt](https://github.com/ryandesign).
 
 Version 0.12 : Updated help output
 
