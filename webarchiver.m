@@ -1,7 +1,7 @@
 //If you use this code, please link to my blog: http://www.entropytheblog.com/blog/ . thanks.
 
 #import <Foundation/Foundation.h>
-#import <Webkit/Webkit.h>
+#import <WebKit/WebKit.h>
 #import <WebKit/WebArchive.h>
 #import "KBWebArchiver.h"
 
